@@ -1,2 +1,18 @@
  --- Installed Entity framework core module in data Access project
  
+ --- Installed MySQL package for ENtity framewokr core 
+ 
+ --- Added DB context file 
+ 
+ --- Added connection string in appsetting.json configuration files 
+ 
+ --- set up db connection services in start up file in configure services method
+ 
+ --- Add Entity framework tools package for commands of EF 
+ 
+ --- added migration
+ 
+ --updated -database for migrations
+ 
+ 
+ 
