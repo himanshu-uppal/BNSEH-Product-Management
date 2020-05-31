@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProductManager.Common;
 using ProductManager.DataAccess.Data.DBContext;
+using ProductManager.DataAccess.Extensions;
 
 namespace ProductManager.API
 {
@@ -30,9 +31,10 @@ namespace ProductManager.API
         {
             services.AddControllers();
 
-
             services.AddDbContext<ProductManagerDbContext>(options =>
         options.UseMySql(Configuration.GetConnectionString(Constants.ProductManagerDBConnection)));
+
+            services.RegisterDataServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

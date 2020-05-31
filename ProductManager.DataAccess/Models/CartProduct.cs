@@ -1,13 +1,12 @@
-﻿using System;
+﻿using ProductManager.DataAccess.Entity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ProductManager.DataAccess.Models
 {
-    public class CartProduct
+    public class CartProduct : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
     }
 }
