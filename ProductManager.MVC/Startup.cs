@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProductManager.Business.Extensions;
 using ProductManager.Common;
 using ProductManager.DataAccess.Data.DBContext;
 using ProductManager.DataAccess.Extensions;
@@ -34,8 +33,7 @@ namespace ProductManager.MVC
             services.AddDbContext<ProductManagerDbContext>(options =>
         options.UseMySql(Configuration.GetConnectionString(Constants.ProductManagerDBConnection)));
 
-            services.RegisterDataServices();
-            services.RegisterBusinessServices();
+             services.RegisterDataServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

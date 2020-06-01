@@ -20,6 +20,7 @@ namespace ProductManager.MVC.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Home Controller View");
             return View();
         }
 
