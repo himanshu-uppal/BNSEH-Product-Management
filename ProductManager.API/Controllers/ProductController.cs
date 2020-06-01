@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Services.Interface;
+using ProductManager.Common;
 
 namespace ProductManager.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -25,14 +26,17 @@ namespace ProductManager.API.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromQuery(Name = "productName")] string productName, [FromQuery(Name = "pageNumber")] int pageNumber, [FromQuery(Name = "pageSize")] int pageSize)
         {
             _logger.LogInformation("Getting all products");
-            
+            pageNumber = (pageNumber <= 0) ? Constants.DEFAULT_PAGE_NUMBER : pageNumber;
+            pageSize = (pageSize <= 0) ? Constants.DEFAULT_PAGE_SIZE : pageSize;
+            productName = productName != null ? productName.Trim() : null;
+
             try
             {
                
-                var products = await productAppService.GetAllProducts();
+                var products = await productAppService.GetAllProducts(productName,pageNumber, pageSize);
 
                 return Ok(products);
 

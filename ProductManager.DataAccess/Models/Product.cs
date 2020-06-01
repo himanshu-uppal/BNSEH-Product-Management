@@ -8,6 +8,6 @@ namespace ProductManager.DataAccess.Models
 {
     public class Product : EntityBase
     {
-       
+       public string Name { get; set; }
     }
 }

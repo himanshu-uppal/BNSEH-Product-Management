@@ -1,4 +1,5 @@
 ﻿using ProductManager.DataAccess.Models;
+using ProductManager.Dto.Product;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace ProductManager.Business.Services.Interface
 {
     public interface IProductAppService
     {
-        Task<IEnumerable<Product>> GetAllProducts();
+        Task<AllProductsDto> GetAllProducts(string productName, int pageNumber, int pageSize);
     }
 }
