@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Extensions;
+using ProductManager.Business.Mapper;
 using ProductManager.Common;
 using ProductManager.DataAccess.Data.DBContext;
 using ProductManager.DataAccess.Extensions;
@@ -37,6 +39,28 @@ namespace ProductManager.API
 
             services.RegisterDataServices();
             services.RegisterBusinessServices();
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("product_cors", policy =>
+                {
+                    policy.AllowAnyOrigin()// Url of the JavaScript Client
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            services.AddAutoMapper(typeof(Startup));
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapping());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

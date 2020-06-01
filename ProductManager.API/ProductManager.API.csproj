@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +22,7 @@
     <ProjectReference Include="..\ProductManager.Business\ProductManager.Business.csproj" />
     <ProjectReference Include="..\ProductManager.Common\ProductManager.Common.csproj" />
     <ProjectReference Include="..\ProductManager.DataAccess\ProductManager.DataAccess.csproj" />
+    <ProjectReference Include="..\ProductManager.Dto\ProductManager.Dto.csproj" />
   </ItemGroup>
 
 
