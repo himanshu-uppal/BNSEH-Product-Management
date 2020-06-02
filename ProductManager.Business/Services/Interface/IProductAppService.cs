@@ -1,4 +1,5 @@
-﻿using ProductManager.DataAccess.Models;
+﻿using ProductManager.Common.ValueObjects;
+using ProductManager.DataAccess.Models;
 using ProductManager.Dto.Product;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace ProductManager.Business.Services.Interface
         Task<ProductDto> GetAProductById(int productId);
 
         Task<ProductDto> DeleteProduct(int productId);
+
+        Task<OperationResult<ProductDto>> UpdateProductPrice(int productId, double updatedProductPrice);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Services.Interface;
 using ProductManager.Common;
+using ProductManager.Dto.Product;
 
 namespace ProductManager.API.Controllers
 {
@@ -120,6 +121,46 @@ namespace ProductManager.API.Controllers
             catch (Exception error)
             {
                 _logger.LogInformation("DeleteProduct : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [HttpPatch("{productId}/price")]
+        public async Task<IActionResult> UpdateProductPrice(int productId, [FromBody] ProductDto productDto)
+        {
+            _logger.LogInformation("UpdateProductPrice");
+
+            double updatedProductPrice = productDto.Price;
+
+            if (productId <= 0 || updatedProductPrice <=0)
+            {
+                return BadRequest();
+            }
+
+            _logger.LogInformation("UpdateProductPrice - with Product Id - {0} and updated product price - {1}", productId, updatedProductPrice);
+
+            try
+            {
+
+                var updateResult = await productAppService.UpdateProductPrice(productId, updatedProductPrice);
+
+                if (updateResult.IsSuccess)
+                {
+                    _logger.LogInformation("Product with id- {0} found , updated product details -  ", productId, updateResult.Data);
+                    return Ok();
+                }
+
+                if(updateResult.MainMessage.Code == Constants.NotFound)
+                return NotFound();
+
+                return Conflict(updateResult.MainMessage.Text);
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogInformation("UpdateProductPrice : Error - {0} ", error);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Services.Interface;
+using ProductManager.Common;
+using ProductManager.Common.ValueObjects;
 using ProductManager.DataAccess.Models;
 using ProductManager.DataAccess.Repositories.Interface;
 using ProductManager.Dto.Product;
@@ -84,6 +86,32 @@ namespace ProductManager.Business.Services
 
             _logger.LogInformation("End");
             return productDto;
+
+        }
+
+       public async Task<OperationResult<ProductDto>> UpdateProductPrice(int productId, double updatedProductPrice)
+        {
+            _logger.LogInformation("Start");
+            Message message;
+
+            var product = await productRepository.GetByIdAsync(productId);
+
+            if(product == null)
+            {
+                message = new Message(Constants.NotFound, "Product not found");
+                return new OperationResult<ProductDto>(null, false, message);
+            }
+
+            product.Price = updatedProductPrice;
+
+            await productRepository.UpdateAsync(product);
+            await productRepository.SaveAsyc();
+
+            ProductDto productDto = _mapper.Map<Product, ProductDto>(product);
+            message = new Message(Constants.Ok, "Product updated Successfully");
+
+            _logger.LogInformation("End");
+            return new OperationResult<ProductDto>(productDto, true, message);
 
         }
     }
