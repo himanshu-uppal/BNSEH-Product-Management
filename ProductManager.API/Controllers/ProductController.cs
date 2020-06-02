@@ -32,21 +32,98 @@ namespace ProductManager.API.Controllers
             pageNumber = (pageNumber <= 0) ? Constants.DEFAULT_PAGE_NUMBER : pageNumber;
             pageSize = (pageSize <= 0) ? Constants.DEFAULT_PAGE_SIZE : pageSize;
             productName = productName != null ? productName.Trim() : null;
+            _logger.LogInformation("Getting all products with criteria - Page number - {0}, Page Size - {1} and Product Name search - {2}", pageNumber, pageSize, productName);
 
             try
             {
                
                 var products = await productAppService.GetAllProducts(productName,pageNumber, pageSize);
 
+                _logger.LogInformation("All products - {0} ", products);
+               
                 return Ok(products);
 
                 
             }
             catch(Exception error)
             {
-                return Ok(error);
+                _logger.LogInformation("Getting All products : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
           
+        }
+
+        [HttpGet("{productId}")]
+        public async Task<IActionResult> GetAProductById(int productId)
+        {
+            _logger.LogInformation("GetAProductById");
+
+           if(productId <= 0)
+            {
+                return BadRequest();
+            }
+         
+            _logger.LogInformation("GetAProductById - with Product Id - {0}", productId);
+
+            try
+            {
+
+                var product = await productAppService.GetAProductById(productId);
+
+                if (product != null)
+                {
+                    _logger.LogInformation("Product with id- {0} found , product details -  ", productId, product);
+                    return Ok(product);
+                }
+
+                return NotFound();        
+
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogInformation("GetAProductById : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            _logger.LogInformation("DeleteProduct");
+
+            if (productId <= 0)
+            {
+                return BadRequest();
+            }
+
+            _logger.LogInformation("DeleteProduct - with Product Id - {0}", productId);
+
+            try
+            {
+
+                var product = await productAppService.DeleteProduct(productId);
+
+                if (product != null)
+                {
+                    _logger.LogInformation("Product with id- {0} found and deleted , product details -  ", productId, product);
+                    return Ok();
+                }
+
+                return NotFound();
+
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogInformation("DeleteProduct : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
         }
 
     }

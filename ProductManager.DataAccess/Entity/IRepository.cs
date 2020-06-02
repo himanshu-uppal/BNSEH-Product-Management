@@ -94,5 +94,8 @@ namespace ProductManager.DataAccess.Entity
         /// </summary>
         /// <param name="predicate">Specify filter.</param>
         Task Delete(Expression<Func<TEntity, bool>> predicate);
+
+        Task<int> SaveAsyc();
+       
     }
 }

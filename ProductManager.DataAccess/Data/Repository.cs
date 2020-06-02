@@ -162,5 +162,10 @@ namespace ProductManager.DataAccess.Data
             }).ConfigureAwait(false);
 
         }
+
+        public async Task<int> SaveAsyc()
+        {
+            return await dbContext.SaveChangesAsync();
+        }
     }
 }

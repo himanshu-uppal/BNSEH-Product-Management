@@ -28,6 +28,7 @@ namespace ProductManager.Business.Services
 
         public async Task<AllProductsDto> GetAllProducts(string productName,int pageNumber, int pageSize)
         {
+            _logger.LogInformation("Start");
             var productsQueryable = productRepository.All();
 
             if (!string.IsNullOrWhiteSpace(productName))
@@ -45,7 +46,45 @@ namespace ProductManager.Business.Services
             allProductsDto.Count = productCount;
             allProductsDto.Products = _mapper.Map<IEnumerable<Product>, List<ProductDto>>(products);
 
+            _logger.LogInformation("End");
+
             return allProductsDto;
+        }
+
+        public async Task<ProductDto> GetAProductById(int productId)
+        {
+            _logger.LogInformation("Start");
+            var product = await productRepository.GetByIdAsync(productId);
+
+            ProductDto productDto = null;
+
+            if (product != null)
+            {
+                productDto = _mapper.Map<Product, ProductDto>(product);                
+            }
+
+            _logger.LogInformation("End");
+            return productDto;
+
+        }
+
+        public async Task<ProductDto> DeleteProduct(int productId)
+        {
+            _logger.LogInformation("Start");
+            var product = await productRepository.GetByIdAsync(productId);            
+
+            ProductDto productDto = null;
+
+            if (product != null)
+            {
+                productDto = _mapper.Map<Product, ProductDto>(product);
+                await productRepository.Delete(product);
+                await productRepository.SaveAsyc();
+            }
+
+            _logger.LogInformation("End");
+            return productDto;
+
         }
     }
         

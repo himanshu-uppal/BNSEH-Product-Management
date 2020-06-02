@@ -10,5 +10,9 @@ namespace ProductManager.Business.Services.Interface
     public interface IProductAppService
     {
         Task<AllProductsDto> GetAllProducts(string productName, int pageNumber, int pageSize);
+
+        Task<ProductDto> GetAProductById(int productId);
+
+        Task<ProductDto> DeleteProduct(int productId);
     }
 }
