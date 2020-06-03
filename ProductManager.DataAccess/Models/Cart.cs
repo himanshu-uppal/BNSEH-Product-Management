@@ -8,6 +8,14 @@ namespace ProductManager.DataAccess.Models
 {
     public class Cart : EntityBase
     {
-       
+        public virtual ICollection<CartProduct> CartProducts { get; set; }
+
+        public virtual User User { get; set; }
+
+        public Cart()
+        {
+            this.CartProducts = new HashSet<CartProduct>();
+        }
+
     }
 }
