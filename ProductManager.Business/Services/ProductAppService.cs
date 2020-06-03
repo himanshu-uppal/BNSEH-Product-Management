@@ -115,6 +115,20 @@ namespace ProductManager.Business.Services
             return new OperationResult<ProductDto>(productDto, true, message);
 
         }
+
+        public async Task<ProductDto> CreateProduct(ProductDto productDto)
+        {
+            _logger.LogInformation("Start");
+
+            var product = _mapper.Map<ProductDto, Product>(productDto);
+            product.CreatedOn = product.ModifiedOn = DateTimeOffset.UtcNow;
+            await productRepository.CreateAsync(product);
+            await productRepository.SaveAsyc();
+
+            _logger.LogInformation("End");
+            return productDto;
+
+        }
     }
         
 }

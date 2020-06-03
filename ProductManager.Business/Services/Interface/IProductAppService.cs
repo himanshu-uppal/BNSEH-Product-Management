@@ -18,5 +18,7 @@ namespace ProductManager.Business.Services.Interface
         Task<ProductDto> DeleteProduct(int productId);
 
         Task<OperationResult<ProductDto>> UpdateProductByPatch(int productId, JsonPatchDocument<Product> patchDoc);
+
+        Task<ProductDto> CreateProduct(ProductDto product);
     }
 }

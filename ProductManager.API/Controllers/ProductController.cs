@@ -93,6 +93,37 @@ namespace ProductManager.API.Controllers
 
         }
 
+
+        [HttpPost("")]
+        public async Task<IActionResult> CreateProduct([FromBody] ProductDto product)
+        {
+            _logger.LogInformation("CreateProduct");
+
+            _logger.LogInformation("CreateProduct -  with details {0}", product);
+
+            try
+            {
+
+                var productDto = await productAppService.CreateProduct(product);
+
+                if (productDto != null)
+                {
+                    _logger.LogInformation("Product is created");
+                    return Ok();
+                }
+
+               return Conflict();
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogInformation("CreateProduct : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
