@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Services.Interface;
 using ProductManager.Common;
+using ProductManager.DataAccess.Models;
 using ProductManager.Dto.Product;
 
 namespace ProductManager.API.Controllers
@@ -128,27 +130,20 @@ namespace ProductManager.API.Controllers
         }
 
         [HttpPatch("{productId}")]
-        public async Task<IActionResult> UpdateProductPrice(int productId, [FromBody] ProductDto productDto)
+        public async Task<IActionResult> UpdateProductByPatch(int productId, [FromBody] JsonPatchDocument<Product> patchDoc)
         {
-            _logger.LogInformation("UpdateProductPrice");
+            _logger.LogInformation("UpdateProductByPatch");
 
-            double updatedProductPrice = productDto.Price;
-
-            if (productId <= 0 || updatedProductPrice <=0)
-            {
-                return BadRequest();
-            }
-
-            _logger.LogInformation("UpdateProductPrice - with Product Id - {0} and updated product price - {1}", productId, updatedProductPrice);
+           _logger.LogInformation("UpdateProductByPatch - product with id - {0} , with patch with details {1}", productId, patchDoc);
 
             try
             {
 
-                var updateResult = await productAppService.UpdateProductPrice(productId, updatedProductPrice);
+                var updateResult = await productAppService.UpdateProductByPatch(productId, patchDoc);
 
                 if (updateResult.IsSuccess)
                 {
-                    _logger.LogInformation("Product with id- {0} found , updated product details -  ", productId, updateResult.Data);
+                    _logger.LogInformation("Product with id- {0} found , updated product details -  ", productId, patchDoc);
                     return Ok();
                 }
 
@@ -160,7 +155,7 @@ namespace ProductManager.API.Controllers
             }
             catch (Exception error)
             {
-                _logger.LogInformation("UpdateProductPrice : Error - {0} ", error);
+                _logger.LogInformation("UpdateProductByPatch : Error - {0} ", error);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

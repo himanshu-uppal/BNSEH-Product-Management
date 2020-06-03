@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductManager.Business.Services.Interface;
@@ -89,7 +90,7 @@ namespace ProductManager.Business.Services
 
         }
 
-       public async Task<OperationResult<ProductDto>> UpdateProductPrice(int productId, double updatedProductPrice)
+       public async Task<OperationResult<ProductDto>> UpdateProductByPatch(int productId, JsonPatchDocument<Product> patchDoc)
         {
             _logger.LogInformation("Start");
             Message message;
@@ -102,7 +103,7 @@ namespace ProductManager.Business.Services
                 return new OperationResult<ProductDto>(null, false, message);
             }
 
-            product.Price = updatedProductPrice;
+            patchDoc.ApplyTo(product);
 
             await productRepository.UpdateAsync(product);
             await productRepository.SaveAsyc();
