@@ -116,9 +116,9 @@ namespace ProductManager.DataAccess.Data
         /// </summary>
         /// <param name="predicate">Specified filter.</param>
         /// <returns>Search result</returns>
-        public virtual TEntity Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return dbContext.Set<TEntity>().FirstOrDefault(predicate);
+            return  dbContext.Set<TEntity>().FirstOrDefault(predicate);
         }
 
         /// <summary>

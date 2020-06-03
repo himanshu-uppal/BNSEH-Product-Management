@@ -18,6 +18,8 @@ namespace ProductManager.DataAccess.Extensions
             services.AddScoped<DbContext, ProductManagerDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
         }
     }
 }

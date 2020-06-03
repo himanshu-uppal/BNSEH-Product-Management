@@ -14,5 +14,7 @@
  
  --updated -database for migrations
  
+ -- Installing Microsoft.AspNetCore.JsonPatch
  
+ --- Installing  Microsoft.AspNetCore.Mvc.NewtonsoftJson
  

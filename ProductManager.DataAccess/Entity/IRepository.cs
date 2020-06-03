@@ -67,7 +67,7 @@ namespace ProductManager.DataAccess.Entity
         /// </summary>
         /// <param name="predicate">Specified filter.</param>
         /// <returns>Search result</returns>
-        TEntity Find(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
         /// Create a new object to database.

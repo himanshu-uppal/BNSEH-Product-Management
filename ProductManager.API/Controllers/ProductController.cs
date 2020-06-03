@@ -127,7 +127,7 @@ namespace ProductManager.API.Controllers
 
         }
 
-        [HttpPatch("{productId}/price")]
+        [HttpPatch("{productId}")]
         public async Task<IActionResult> UpdateProductPrice(int productId, [FromBody] ProductDto productDto)
         {
             _logger.LogInformation("UpdateProductPrice");

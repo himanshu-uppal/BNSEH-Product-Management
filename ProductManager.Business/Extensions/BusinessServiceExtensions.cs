@@ -22,7 +22,9 @@ namespace ProductManager.Business.Extensions
         private static void RegisterAppServices(this IServiceCollection service)
         {
             service.AddScoped<IProductAppService, ProductAppService>();
-           
+            service.AddScoped<IUserService, UserService>();
+            service.AddScoped<ICryptoService, CryptoService>();
+
         }
 
     }
