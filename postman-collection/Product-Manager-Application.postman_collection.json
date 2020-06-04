@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "42d7bc22-8c64-4805-8242-f7b6566ef0ba",
+		"name": "Product-Manager-Application",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ProductManager",
+			"item": [
+				{
+					"name": "Get all products",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:51829/api/products?pageNumber=1&pageSize=10&productName=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								},
+								{
+									"key": "productName",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a product by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:51829/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImhpbWFuc2h1MSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MTI2MzIyMCwiZXhwIjoxNTkxMjY1MDIwLCJpYXQiOjE1OTEyNjMyMjB9.S6Ti9eGACzweuFodro9sBtnc0ROpkCGVthpFmXqnEGg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:51829/api/products/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product price",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImhpbWFuc2h1MSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MTI2MzIyMCwiZXhwIjoxNTkxMjY1MDIwLCJpYXQiOjE1OTEyNjMyMjB9.S6Ti9eGACzweuFodro9sBtnc0ROpkCGVthpFmXqnEGg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"price\":5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:51829/api/products/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login AUthentication",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"username\":\"himanshu1\",\n\"password\":\"hello\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:51829/api/users/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"users",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User registeration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\":\"Himanshu\",\n\t\"lastName\":\"Uppal\",\n\t\"username\":\"himanshu12\",\n\t\"password\":\"hello\",\n\t\"email\":\"himanshu12@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:51829/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImhpbWFuc2h1MSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MTI2MzIyMCwiZXhwIjoxNTkxMjY1MDIwLCJpYXQiOjE1OTEyNjMyMjB9.S6Ti9eGACzweuFodro9sBtnc0ROpkCGVthpFmXqnEGg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Product Name\",\n\t\"price\":100.00,\n\t\"description\":\"Product Description\",\n\t\"imageUrl\":\"Image Url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:51829/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImhpbWFuc2h1MSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MTI2MzIyMCwiZXhwIjoxNTkxMjY1MDIwLCJpYXQiOjE1OTEyNjMyMjB9.S6Ti9eGACzweuFodro9sBtnc0ROpkCGVthpFmXqnEGg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Product Name\",\n\t\"price\":100.00,\n\t\"description\":\"Product Description\",\n\t\"imageUrl\":\"Image Url\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:51829/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "51829",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

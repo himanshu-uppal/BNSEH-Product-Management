@@ -20,5 +20,7 @@ namespace ProductManager.Business.Services.Interface
         Task<OperationResult<ProductDto>> UpdateProductByPatch(int productId, JsonPatchDocument<Product> patchDoc);
 
         Task<ProductDto> CreateProduct(ProductDto product);
+
+        Task<OperationResult<ProductDto>> UpdateProduct(int productId, ProductDto productDto);
     }
 }

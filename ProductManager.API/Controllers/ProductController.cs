@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -93,7 +94,7 @@ namespace ProductManager.API.Controllers
 
         }
 
-
+        [Authorize(Policy=Constants.ADMIN_ROLE_NAME)]
         [HttpPost("")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto product)
         {
@@ -124,6 +125,7 @@ namespace ProductManager.API.Controllers
 
         }
 
+        [Authorize(Policy = Constants.ADMIN_ROLE_NAME)]
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
@@ -160,6 +162,7 @@ namespace ProductManager.API.Controllers
 
         }
 
+        [Authorize(Policy = Constants.ADMIN_ROLE_NAME)]
         [HttpPatch("{productId}")]
         public async Task<IActionResult> UpdateProductByPatch(int productId, [FromBody] JsonPatchDocument<Product> patchDoc)
         {
@@ -187,6 +190,37 @@ namespace ProductManager.API.Controllers
             catch (Exception error)
             {
                 _logger.LogInformation("UpdateProductByPatch : Error - {0} ", error);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+        }
+
+        [Authorize(Policy = Constants.ADMIN_ROLE_NAME)]
+        [HttpPut("{productid}")]
+        public async Task<IActionResult> UpdateProduct(int productId,[FromBody] ProductDto product)
+        {
+            _logger.LogInformation("UpdateProduct");
+
+            _logger.LogInformation("UpdateProduct -  with details {0}", product);
+
+            try
+            {
+
+                var productUpdateResult = await productAppService.UpdateProduct(productId,product);
+
+                if (productUpdateResult.IsSuccess)
+                {
+                    _logger.LogInformation("Product is updated");
+                    return Ok(productUpdateResult.Data);
+                }
+
+                return Conflict(productUpdateResult.MainMessage.Text);
+
+            }
+            catch (Exception error)
+            {
+                _logger.LogInformation("UpdateProduct : Error - {0} ", error);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }

@@ -41,7 +41,9 @@ namespace ProductManager.Business.Services
             }
 
             //apply pagination here
-            var products = await productsQueryable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false);
+            var products = await productsQueryable.Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Include(p => p.ProductCategories)
+                .ToListAsync().ConfigureAwait(false);
 
             int productCount = productsQueryable.Count();
 
@@ -127,6 +129,36 @@ namespace ProductManager.Business.Services
 
             _logger.LogInformation("End");
             return productDto;
+
+        }
+
+        public async Task<OperationResult<ProductDto>> UpdateProduct(int productId, ProductDto productDto)
+        {
+            _logger.LogInformation("Start");
+            Message message;
+
+            var product = await productRepository.GetByIdAsync(productId);
+
+            if (product == null)
+            {
+                message = new Message(Constants.NotFound, "Product not found");
+                return new OperationResult<ProductDto>(null, false, message);
+            }
+
+            product.Name = productDto.Name;
+            product.Price = productDto.Price;
+            product.Description = productDto.Description;
+            product.ImageUrl = productDto.ImageUrl;
+            product.ModifiedOn = DateTimeOffset.UtcNow;
+
+            await productRepository.UpdateAsync(product);
+            await productRepository.SaveAsyc();
+
+            ProductDto productDtoCreated = _mapper.Map<Product, ProductDto>(product);
+            message = new Message(Constants.Ok, "Product updated Successfully");
+
+            _logger.LogInformation("End");
+            return new OperationResult<ProductDto>(productDtoCreated, true, message);
 
         }
     }
