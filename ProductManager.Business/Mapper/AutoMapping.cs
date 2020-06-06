@@ -24,15 +24,17 @@ namespace ProductManager.Business.Mapper
             //  .ForMember(userDto => userDto.Role, userRole => userRole.MapFrom(user => user.Role.Name));
             CreateMap<Category, CategoryDto>();
             //CreateMap<Product, ProductDto>();
-             //.AfterMap((product, productDto) =>
-             // {
-             //     foreach (var category in product.ProductCategories)
-             //     {
-             //         CategoryDto categoryDto = new CategoryDto();
-             //         categoryDto.Name = category.Category.Name;
-             //         productDto.Categories.Add(categoryDto);
-             //     }
-             // });
+            //.AfterMap((product, productDto) =>
+            // {
+            //     foreach (var category in product.ProductCategories)
+            //     {
+            //         CategoryDto categoryDto = new CategoryDto();
+            //         categoryDto.Name = category.Category.Name;
+            //         productDto.Categories.Add(categoryDto);
+            //     }
+            // });
+
+           // CreateMap<RegisterViewModel,User>().ReverseMap();
         }
     }
 }
